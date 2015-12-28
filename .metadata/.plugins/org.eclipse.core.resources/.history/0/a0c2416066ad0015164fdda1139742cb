@@ -39,7 +39,7 @@ public class Board extends JPanel implements ActionListener{
 	    private final int scrSize = nroBlocks * blockSize;
 	    private final int pacDelay = 2;
 	    private final int pacCount = 4;
-	    private final int maxGhosts =5;
+	    private final int maxGhosts = 4;
 	    private final int pacSpeed = 6;
 	    
 	    //pacman
@@ -60,24 +60,7 @@ public class Board extends JPanel implements ActionListener{
 	    private int pacmanx, pacmany, pacmandx, pacmandy;
 	    private int reqdx, reqdy, viewdx, viewdy;
 	    
-	    private final int[][] levelData1 = {
-	    	{ 
-	    	 3, 10, 10,  2, 10, 10, 10,  2, 10, 10, 14,  3, 10, 30, 39,
-	    	 5,  3,  6,  5,  7, 11, 10,  4,  3,  10,  6,  1,  6, 11,  4,
-	    	 5, 13,  5,  5,  9, 10, 10, 12,  5,  7,  5,  5,  9, 10,  12,
-	    	 1,  2,  4,  9, 10, 10,  2, 10,  4,  5, 13,  5,  3,  6,  7,
-	    	 5,  5,  9, 10, 10, 14,  5, 23,  5,  9, 10,  8,  4,  9, 12,
-	    	 5,  9,  2, 10, 10,  6,  5,  5,  5,  3, 10,  2,  8, 10,  6,
-	    	 5,  7,  5,  3,  6,  5,  5,  5,  5,  5, 11, 12,  7,  7,  13,
-	    	 9,  4,  5, 13,  5,  5,  1,  8,  8,  8, 10, 10,  4,  1,  6,
-	    	 7,  5,  9, 10, 12,  5, 13,  3, 10,  2, 10, 10,  4,  5,  5,
-	    	 5,  1, 10, 10,  6,  9, 14,  5,  3, 12,  3, 14,  5,  5,  5,
-	    	 5,  5,  3,  6,  1, 10, 14,  5,  5,  3, 12,  7,  5, 13,  5,
-	    	 5,  5, 29,  5,  5, 11, 10, 12,  1,  8, 10,  4,  9,  6,  5,
-	    	 1,  4,  7,  5,  9, 10, 10, 10, 12, 27, 10, 12,  7,  5,  5,
-	    	 5,  5,  5,  9, 10,  6, 11, 10,  6, 11, 10, 10,  4,  5,  5,
-	    	13,  9,  8, 10, 10,  8, 10, 10,  8, 10, 10, 10, 12,  9, 12
-	    	},
+	    private final int[] levelData1 = 
 	    	{ 
 	    	 3, 10, 10,  2, 10, 10, 10,  2, 10, 10, 14,  3, 10, 30, 39,
 	    	 5,  3,  6,  1,  6, 11, 10,  4,  3,  2,  6,  1,  6, 11,  4,
@@ -94,14 +77,32 @@ public class Board extends JPanel implements ActionListener{
 	    	 1,  4,  7,  5,  9, 10, 10, 10, 12, 27, 10, 12,  7,  5,  5,
 	    	 5,  5,  5,  9, 10,  6, 11, 10,  6, 11, 10, 10,  4,  5,  5,
 	    	13,  9,  8, 10, 10,  8, 10, 10,  8, 10, 10, 10, 12,  9, 12
-	    	}
-	    };
+	    	};
 	    
-	    private final int validSpeeds[] = {1, 2, 3, 4};
+	    private final int[] levelData2 = 
+	    		{ 
+	    		 3, 10, 10, 18, 10, 10, 10,  2, 10, 10, 14,  3, 10, 30, 39,
+		    	 5,  3,  6, 17,  6, 11, 10,  4,  3,  2,  6,  1,  6, 11,  4,
+		    	 5, 13,  5, 21,  9, 10, 10, 12,  5,  5,  5,  5,  9, 10,  4,
+		    	 1,  2,  4,  9, 10, 10,  2, 10,  4,  5, 13,  5,  3,  6,  5,
+		    	 5,  5,  9, 10, 10, 14,  5, 23,  5,  9, 10,  8,  4,  9, 12,
+		    	 5,  9,  2, 10, 10,  6,  5,  5,  5,  3, 10,  2,  0, 10,  6,
+		    	 5,  7,  5,  3,  6,  5,  5,  5,  5,  5, 11, 12,  5,  7,  5,
+		    	 9,  4,  5, 13,  5,  5,  1,  8,  8,  8, 10, 10,  4,  1,  4,
+		    	 7,  5,  9, 10, 12,  5, 13,  3, 10,  2, 10, 10,  4,  5,  5,
+		    	 5,  1, 10, 10,  6,  9, 10,  4,  3, 12,  3, 14,  5,  5,  5,
+		    	 5,  5,  3,  6,  1, 10, 14,  5,  5,  3, 12,  7,  5, 13,  5,
+		    	 5,  5, 29,  5,  1, 10, 10, 12,  1,  8, 10,  4,  9,  6,  5,
+		    	 1,  4,  7,  5,  9, 10, 10, 10, 12, 27, 10, 12,  7,  5,  5,
+		    	 5,  5,  5,  9, 10,  6, 11, 10,  6, 11, 10, 10,  4,  5,  5,
+		    	13,  9,  8, 10, 10,  8, 10, 10,  8, 10, 10, 10, 12,  9, 12
+		    	};
+	    
+	    private final int validSpeeds[] = {1, 2, 3, 4, 5, 6};
 
         private int currentSpeed = 3;
         private int[] screenData;
-        private int level;
+        private int level = 0;
         private Timer timer;
         
         public Board(){
@@ -118,8 +119,6 @@ public class Board extends JPanel implements ActionListener{
         private void initVar(){
         	screenData = new int[scrSize];
         	backColor = new Color(200, 20, 20);
-        	
-        	level = 0;
         	
         	d = new Dimension(400, 400);
         	dx = new int[4];
@@ -167,7 +166,7 @@ public class Board extends JPanel implements ActionListener{
                 movePacman();
                 drawPacman(g2d);
                 moveGhosts(g2d);
-
+                mazeOk();
             }
         }
         
@@ -191,10 +190,33 @@ public class Board extends JPanel implements ActionListener{
             g2d.setFont(font);
             g2d.setColor(new Color(96, 128, 255));
             s = "Score: " + score;
-            g2d.drawString(s, scrSize / 2 + 80, scrSize + 16);
+            g2d.drawString(s, scrSize / 2 + 96, scrSize + 16);
 
             for (i = 0; i < lifeLeft; i++) {
                 g2d.drawImage(pacman3right, i * 28 + 8, scrSize + 1, this);
+            }
+        }
+        
+        private void mazeOk() {
+
+            int i = 0;
+            boolean finished = true;
+
+            while (i < nroBlocks * nroBlocks && finished) {
+
+                if ((screenData[i] & 48) != 0) {
+                    finished = false;
+                }
+
+                i++;
+            }
+
+            if (finished) {
+
+                score += 50;
+
+                //initLevel2();
+                
             }
         }
         
@@ -288,16 +310,6 @@ public class Board extends JPanel implements ActionListener{
             g2d.drawImage(ghost, x, y, this);
         }
         
-        private void nroGhostsLevel(){
-        	switch (level){
-        	case 0: nroGhosts = 1;
-        			break;
-        	case 1: nroGhosts = 2;
-        			break;
-        	default: nroGhosts = 1;
-        	}
-        }
-        
         private void movePacman() {
 
             int pos;
@@ -321,16 +333,8 @@ public class Board extends JPanel implements ActionListener{
                 
                 if ((ch & 32) != 0) {
                     screenData[pos] =  (ch & 15);
-                    score += 50;
-                    
-                    if(level < 2)
-                    {
-                    	level++;
-                    }
-                    
-                    nroGhostsLevel();
-                    
-                    initLevel();
+                    score = score + 20;
+                    initLevel2();
                 }
                 
 
@@ -503,9 +507,19 @@ public class Board extends JPanel implements ActionListener{
         private void initLevel() {
 
             int i;
-            int aux = level % 2;
             for (i = 0; i < nroBlocks * nroBlocks; i++) {
-                screenData[i] = levelData1[aux][i];
+                screenData[i] = levelData1[i];
+            }
+            
+            continueLevel();
+            
+        }
+        
+        private void initLevel2() {
+
+            int i;
+            for (i = 0; i < nroBlocks * nroBlocks; i++) {
+                screenData[i] = levelData2[i];
             }
             
             continueLevel();
@@ -527,7 +541,7 @@ public class Board extends JPanel implements ActionListener{
                 ghostDy[i] = 0;
                 ghostDx[i] = dx;
                 dx = -dx;
-                random = rg.nextInt(131) % 4;
+                random = rg.nextInt(131) % 6;
 
                 ghostSpeed[i] = validSpeeds[random];
             }
@@ -541,7 +555,7 @@ public class Board extends JPanel implements ActionListener{
             viewdx = -1;
             viewdy = 0;
             dying = false;
-         
+            level++;
         }
 
         private void loadImages() {

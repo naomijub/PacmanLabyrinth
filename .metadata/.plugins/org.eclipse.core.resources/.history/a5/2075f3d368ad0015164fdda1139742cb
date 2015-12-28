@@ -288,16 +288,6 @@ public class Board extends JPanel implements ActionListener{
             g2d.drawImage(ghost, x, y, this);
         }
         
-        private void nroGhostsLevel(){
-        	switch (level){
-        	case 0: nroGhosts = 1;
-        			break;
-        	case 1: nroGhosts = 2;
-        			break;
-        	default: nroGhosts = 1;
-        	}
-        }
-        
         private void movePacman() {
 
             int pos;
@@ -327,8 +317,6 @@ public class Board extends JPanel implements ActionListener{
                     {
                     	level++;
                     }
-                    
-                    nroGhostsLevel();
                     
                     initLevel();
                 }
@@ -503,9 +491,9 @@ public class Board extends JPanel implements ActionListener{
         private void initLevel() {
 
             int i;
-            int aux = level % 2;
+            //int aux = level % 2;
             for (i = 0; i < nroBlocks * nroBlocks; i++) {
-                screenData[i] = levelData1[aux][i];
+                screenData[i] = levelData1[0][i];
             }
             
             continueLevel();
@@ -541,7 +529,7 @@ public class Board extends JPanel implements ActionListener{
             viewdx = -1;
             viewdy = 0;
             dying = false;
-         
+            level++;
         }
 
         private void loadImages() {
