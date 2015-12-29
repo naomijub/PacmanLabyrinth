@@ -25,7 +25,7 @@ public class Board extends JPanel implements ActionListener{
 		private final Font font = new Font("Arial", Font.BOLD, 20);
 		private final Font fontSmall = new Font("Times New Roman", Font.BOLD, 16);
 		private final Color dotColor = new Color(192, 192, 0);
-		private final Color winColor = new Color(192, 0, 0);
+		private final Color winColor = new Color(20, 192, 0);
 		private Color backColor;
 		private Image img;
 		
@@ -39,7 +39,7 @@ public class Board extends JPanel implements ActionListener{
 	    private final int scrSize = nroBlocks * blockSize;
 	    private final int pacDelay = 2;
 	    private final int pacCount = 4;
-	    private final int maxGhosts = 4;
+	    private final int maxGhosts =5;
 	    private final int pacSpeed = 6;
 	    
 	    //pacman
@@ -60,45 +60,65 @@ public class Board extends JPanel implements ActionListener{
 	    private int pacmanx, pacmany, pacmandx, pacmandy;
 	    private int reqdx, reqdy, viewdx, viewdy;
 	    
-	    private final int[][] levelData = {{ 3, 10, 10,  2, 10, 10, 10,  2, 10, 10, 14,  3, 10, 30, 35,
-	    	 5,  3,  6,  1,  6, 11, 10,  4,  3,  2,  6,  1,  6, 11,  4,
-	    	 5, 13,  5,  5,  9, 10, 10, 12,  5,  5,  5,  9, 10,  4,
-	    	 1,  2,  4,  9, 10, 10,  2, 10,  4,  5, 13,  5,  3,  6,  5,
-	    	 5,  5,  9, 10, 10, 14,  5, 18,  5,  9, 10,  8,  4,  9, 12,
-	    	 5,  9, 2, 10, 10,  6,  5,  5,  5,  3, 10, 2, 0, 10,  6,
-	    	 5,  7,  5,  3,  6,  5,  5,  5,  5,  5, 11, 12,  5,  7,  5,
-	    	 9,  4,  5, 13,  5,  5,  1,  8,  8,  8, 10, 10,  4,  1,  4,
+	    private final int[][] levelData1 = {
+	    	{ 
+	    	 3, 10, 10,  2, 10, 10, 10,  2, 10, 10, 14,  3, 10, 30, 39,
+	    	 5,  3,  6,  5,  7, 11, 10,  4,  3,  10,  6,  1,  6, 11,  4,
+	    	 5, 13,  5,  5,  9, 10, 10, 12,  5,  7,  5,  5,  9, 10,  12,
+	    	 1,  2,  4,  9, 10, 10,  2, 10,  4,  5, 13,  5,  3,  6,  7,
+	    	 5,  5,  9, 10, 10, 14,  5, 23,  5,  9, 10,  8,  4,  9, 12,
+	    	 5,  9,  2, 10, 10,  6,  5,  5,  5,  3, 10,  2,  8, 10,  6,
+	    	 5,  7,  5,  3,  6,  5,  5,  5,  5,  5, 11, 12,  7,  7,  13,
+	    	 9,  4,  5, 13,  5,  5,  1,  8,  8,  8, 10, 10,  4,  1,  6,
 	    	 7,  5,  9, 10, 12,  5, 13,  3, 10,  2, 10, 10,  4,  5,  5,
-	    	 5,  1, 10, 10,  6,  9, 10,  4, 3, 12,  3, 14,  5,  5,  5,
+	    	 5,  1, 10, 10,  6,  9, 14,  5,  3, 12,  3, 14,  5,  5,  5,
 	    	 5,  5,  3,  6,  1, 10, 14,  5,  5,  3, 12,  7,  5, 13,  5,
-	    	 5,  5, 29,  5,  1, 10, 10, 12,  1,  8, 10,  4,  9,  6,  5,
+	    	 5,  5, 29,  5,  5, 11, 10, 12,  1,  8, 10,  4,  9,  6,  5,
 	    	 1,  4,  7,  5,  9, 10, 10, 10, 12, 27, 10, 12,  7,  5,  5,
 	    	 5,  5,  5,  9, 10,  6, 11, 10,  6, 11, 10, 10,  4,  5,  5,
-	    	13,  9,  8, 10, 10,  8, 10, 10,  8, 10, 10, 10, 12,  9, 12},
-	    	
-	    {   3, 10, 10,  2, 10, 10, 10,  2, 10, 10, 14,  3, 10, 30, 39,
-	    	5,  3,  6,  1,  6, 11, 10,  4,  3,  2,  6,  1,  6, 11,  4,
-	    	5, 13,  5,  5,  9, 10, 10, 12,  5,  5,  5,  9, 10,  4,
-	    	1,  2,  4,  9, 10, 10,  2, 10,  4,  5, 13,  5,  3,  6,  5,
-	    	5,  5,  9, 10, 10, 14,  5, 18,  5,  9, 10,  8,  4,  9, 12,
-	    	5,  9, 2, 10, 10,  6,  5,  5,  5,  3, 10, 2, 0, 10,  6,
-	    	5,  7,  5,  3,  6,  5,  5,  5,  5,  5, 11, 12,  5,  7,  5,
-	    	9,  4,  5, 13,  5,  5,  1,  8,  8,  8, 10, 10,  4,  1,  4,
-	    	7,  5,  9, 10, 12,  5, 13,  3, 10,  2, 10, 10,  4,  5,  5,
-	    	5,  1, 10, 10,  6,  9, 10,  4, 3, 12,  3, 14,  5,  5,  5,
-	    	5,  5,  3,  6,  1, 10, 14,  5,  5,  3, 12,  7,  5, 13,  5,
-	    	5,  5, 29,  5,  1, 10, 10, 12,  1,  8, 10,  4,  9,  6,  5,
-	    	1,  4,  7,  5,  9, 10, 10, 10, 12, 27, 10, 12,  7,  5,  5,
-	    	5,  5,  5,  9, 10,  6, 11, 10,  6, 11, 10, 10,  4,  5,  5,
 	    	13,  9,  8, 10, 10,  8, 10, 10,  8, 10, 10, 10, 12,  9, 12
-}};
+	    	},
+	    	{ 
+	    	 7,  3, 10, 10, 10, 10,  6, 27, 10, 10, 10, 10,  6,  3, 46,
+	    	 5,  9, 10,  2, 10,  6,  9, 10, 10, 10, 10, 10, 12,  5, 23,
+	    	 5, 11,  6, 29,  3,  4,  3, 10, 10, 10, 10, 10, 10, 12,  5,
+	    	 1,  6,  9, 10, 12,  5,  5,  3, 10, 10, 10, 10, 10, 10, 12,
+	    	 5,  5,  3, 10, 10, 12,  5,  9, 10,  2, 10,  6,  3, 10,  6,
+	    	 5,  9, 12,  3, 10,  6,  9, 10, 10,  4,  3, 12,  9, 30,  5,
+	    	 1, 10,  6,  5,  3, 12, 11, 10,  6,  5,  9,  6,  3,  6,  5,
+	    	 9,  6,  5,  5,  1, 10, 10,  6,  5,  5,  3, 12,  5,  9, 12,
+	    	 7,  5,  5,  5,  5,  3, 10, 12,  5,  5,  9, 10,  8, 10,  6,
+	    	 1, 12,  5,  5, 13,  9,  6,  3, 12,  9, 10, 10, 10,  6,  5,
+	    	 5, 23,  5,  5,  3, 10, 12,  9, 10, 10,  2, 10, 14,  5,  5,
+	    	 9, 12,  5,  5,  5,  3,  2,  6,  3,  6,  9, 10,  6,  5,  5,
+	    	 3, 10, 12,  5,  5,  5,  5,  5,  5,  9, 10,  6,  5,  1,  4,
+	    	 1, 10, 10, 12, 29,  5,  5,  9,  8, 10,  6,  9, 12,  5,  5,
+	    	 9, 10, 10, 10, 10, 12, 13, 27, 10, 10,  8, 10, 10, 12, 29
+	    	},
+	    	{
+	    	11, 10,  6,  3,  6,  3,  6,  3,  6, 23,  3, 10, 10, 10, 46,
+	    	 3,  6,  5,  5,  9, 12,  9, 12,  9, 12,  5,  3, 10, 10, 30,
+	    	 5,  5,  5,  9, 10,  6,  3, 10, 10, 10, 12,  9, 10, 10,  6,
+	    	 5,  5,  1, 10, 10, 12,  1, 10, 10, 10, 10,  6,  3, 10, 12,
+	    	 5,  5,  5,  3, 10, 30,  9, 10, 10,  6, 23,  5,  9, 10,  6,
+	    	 5,  9,  4,  9, 10,  2, 10, 10,  6,  5,  5,  9, 10,  6,  5,
+	    	 5, 23,  9, 10,  6,  5,  3, 10, 12,  5,  5,  3,  6,  9, 12,
+	    	 5,  9, 10,  6,  5,  5,  5,  3, 10, 12,  9, 12,  9, 10,  6,
+	    	 5,  3,  6,  5,  5,  5,  5,  5, 11, 10, 10, 10,  2,  6,  5,
+	    	 1, 12,  9, 12,  5,  5,  5,  9, 10, 10,  2,  6,  5,  5,  5,
+	    	 5,  3, 10, 10, 12,  5,  9, 10, 10, 30,  5,  5,  5,  5,  5,
+	    	 5,  1, 10, 10, 10,  8, 10, 10, 10,  2, 12,  1, 12,  5,  5,
+	    	 5,  9, 10, 10, 10,  2, 10,  2, 10,  8, 10, 12,  3, 12,  5,
+	    	 5, 27, 10, 10,  6,  5,  3, 12,  3, 10, 10, 10, 12, 27,  4,
+	    	 9, 10, 10, 10,  8,  8,  8, 10,  8, 10, 10, 10, 10, 10, 12
+	    	 }
+	    };
 	    
-	    private final int validSpeeds[] = {1, 2, 3, 4, 5, 6};
-        private final int maxSpeed = 6;
+	    private final int validSpeeds[] = {1, 2, 3, 4};
 
         private int currentSpeed = 3;
         private int[] screenData;
-        private static int level = 0;
+        private int level;
         private Timer timer;
         
         public Board(){
@@ -113,8 +133,10 @@ public class Board extends JPanel implements ActionListener{
         }
         
         private void initVar(){
-        	screenData = new int[nroBlocks * nroBlocks];
-        	backColor = new Color(20, 200, 20);
+        	screenData = new int[scrSize];
+        	backColor = new Color(200, 20, 20);
+        	
+        	level = 0;
         	
         	d = new Dimension(400, 400);
         	dx = new int[4];
@@ -162,20 +184,20 @@ public class Board extends JPanel implements ActionListener{
                 movePacman();
                 drawPacman(g2d);
                 moveGhosts(g2d);
-                mazeOk();
+
             }
         }
         
         private void showIntro(Graphics2D g2d) {
 
-        	String s = "Press s to start.";
+        	String str = "Press s to start.";
             
             g2d.setColor(new Color(0, 150, 200));
             g2d.fillRect(50, scrSize / 2 - 30, scrSize - 100, 50);
             g2d.drawRect(50, scrSize / 2 - 30, scrSize - 100, 50);
             g2d.setColor(Color.WHITE);
             g2d.setFont(fontSmall);
-            g2d.drawString(s, scrSize / 3, scrSize / 2);
+            g2d.drawString(str, scrSize / 3, scrSize / 2);
         }
         
         private void drawScore(Graphics2D g2d) {
@@ -186,63 +208,26 @@ public class Board extends JPanel implements ActionListener{
             g2d.setFont(font);
             g2d.setColor(new Color(96, 128, 255));
             s = "Score: " + score;
-            g2d.drawString(s, scrSize / 2 + 96, scrSize + 16);
+            g2d.drawString(s, scrSize / 2 + 70, scrSize + 16);
 
             for (i = 0; i < lifeLeft; i++) {
                 g2d.drawImage(pacman3right, i * 28 + 8, scrSize + 1, this);
             }
         }
         
-        private void mazeOk() {
-
-            int i = 0;
-            boolean finished = true;
-
-            while (i < nroBlocks * nroBlocks && finished) {
-
-                if ((screenData[i] & 48) != 0) {
-                    finished = false;
-                }
-
-                i++;
-            }
-
-            if (finished) {
-
-                score += 50;
-
-                
-                    switch (level){
-                    case 0: nroGhosts = 1; 
-                    	break;
-                    case 1: nroGhosts = 1;
-                    	break;
-                    case 2: nroGhosts = 1; 
-                    	break;
-                    case 3: nroGhosts = 2;
-                    	break;
-                    case 4: nroGhosts = 2; 
-                    	break;
-                    case 5: nroGhosts = 2;
-                    	break;
-                    case 6: nroGhosts = 3;
-                    	break;
-                    case 7: nroGhosts = 3; 
-                    	break;
-                    case 8: nroGhosts = 3; 
-                    	break;
-                    case 9: nroGhosts = 4; 
-                    	break;
-                    default: nroGhosts = 1;
-                    }
-                
-
-                /*if ((currentSpeed < maxSpeed) && (level % 2 == 0)) {
-                    currentSpeed++;
-                }*/
-
-                initLevel();
-            }
+        private void drawGameOver(Graphics2D g2d){
+        	String str = "GAME OVER!!!";
+        	String str2 =	"Score: " + score;
+        	String str3 = "\n Press s to continue.";
+        	
+        	g2d.setColor(new Color(0, 150, 200));
+            g2d.fillRect(50, scrSize / 2 - 30, scrSize - 100, 80);
+            g2d.drawRect(50, scrSize / 2 - 30, scrSize - 100, 80);
+            g2d.setColor(Color.RED);
+            g2d.setFont(fontSmall);
+            g2d.drawString(str, scrSize / 3, scrSize / 2);
+            g2d.drawString(str2, (scrSize / 3) + 25 , (scrSize / 2) + 15);
+            g2d.drawString(str3, (scrSize / 3) - 7 , (scrSize / 2) + 30);
         }
         
         private void die() {
@@ -335,6 +320,19 @@ public class Board extends JPanel implements ActionListener{
             g2d.drawImage(ghost, x, y, this);
         }
         
+        private void nroGhostsLevel(){
+        	int aux = level % 3;
+        	switch (aux){
+        	case 0: nroGhosts = 1;
+        			break;
+        	case 1: nroGhosts = 2;
+        			break;
+        	case 2: nroGhosts = 3;
+        			break;
+        	default: nroGhosts = 1;
+        	}
+        }
+        
         private void movePacman() {
 
             int pos;
@@ -358,7 +356,12 @@ public class Board extends JPanel implements ActionListener{
                 
                 if ((ch & 32) != 0) {
                     screenData[pos] =  (ch & 15);
-                    score = score + 20;
+                    score += 50;
+
+                    level++;
+                    
+                    nroGhostsLevel();
+                    
                     initLevel();
                 }
                 
@@ -532,18 +535,19 @@ public class Board extends JPanel implements ActionListener{
         private void initLevel() {
 
             int i;
+            int aux = level % 3;
             for (i = 0; i < nroBlocks * nroBlocks; i++) {
-                screenData[i] = levelData[level][i];
+                screenData[i] = levelData1[aux][i];
             }
             
             continueLevel();
-            level++;
+            
         }
-        
-        
 
         private void continueLevel() {
 
+        	Random rg = new Random();
+        	
             short i;
             int dx = 1;
             int random;
@@ -555,11 +559,7 @@ public class Board extends JPanel implements ActionListener{
                 ghostDy[i] = 0;
                 ghostDx[i] = dx;
                 dx = -dx;
-                random = (int) (Math.random() * (currentSpeed + 1));
-
-                if (random > currentSpeed) {
-                    random = currentSpeed;
-                }
+                random = rg.nextInt(131) % 4;
 
                 ghostSpeed[i] = validSpeeds[random];
             }
@@ -573,7 +573,7 @@ public class Board extends JPanel implements ActionListener{
             viewdx = -1;
             viewdy = 0;
             dying = false;
-            
+         
         }
 
         private void loadImages() {
@@ -616,7 +616,11 @@ public class Board extends JPanel implements ActionListener{
             if (gameOn) {
                 playGame(g2d);
             } else {
-                showIntro(g2d);
+            	if( lifeLeft == 0){
+            		drawGameOver(g2d);
+            	}else{
+            		showIntro(g2d);
+            	}
             }
 
             g2d.drawImage(img, 5, 5, this);

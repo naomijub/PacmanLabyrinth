@@ -220,10 +220,10 @@ public class Board extends JPanel implements ActionListener{
         	String str2 =	"Score: " + score;
         	String str3 = "Press s to continue.";
         	
-        	g2d.setColor(new Color(0, 150, 200));
+        	g2d.setColor(new Color(0, 200, 150));
             g2d.fillRect(50, scrSize / 2 - 30, scrSize - 100, 80);
             g2d.drawRect(50, scrSize / 2 - 30, scrSize - 100, 80);
-            g2d.setColor(Color.RED);
+            g2d.setColor(new Color(250, 15, 15));
             g2d.setFont(fontSmall);
             g2d.drawString(str, scrSize / 3, scrSize / 2);
             g2d.drawString(str2, (scrSize / 3) + 25 , (scrSize / 2) + 15);
