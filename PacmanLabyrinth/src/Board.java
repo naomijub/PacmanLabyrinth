@@ -94,7 +94,24 @@ public class Board extends JPanel implements ActionListener{
 	    	 3, 10, 12,  5,  5,  5,  5,  5,  5,  9, 10,  6,  5,  1,  4,
 	    	 1, 10, 10, 12, 29,  5,  5,  9,  8, 10,  6,  9, 12,  5,  5,
 	    	 9, 10, 10, 10, 10, 12, 13, 27, 10, 10,  8, 10, 10, 12, 29
-	    	}
+	    	},
+	    	{
+	    	11, 10,  6,  3,  6,  3,  6,  3,  6, 23,  3, 10, 10, 10, 46,
+	    	 3,  6,  5,  5,  9, 12,  9, 12,  9, 12,  5,  3, 10, 10, 30,
+	    	 5,  5,  5,  9, 10,  6,  3, 10, 10, 10, 12,  9, 10, 10,  6,
+	    	 5,  5,  1, 10, 10, 12,  1, 10, 10, 10, 10,  6,  3, 10, 12,
+	    	 5,  5,  5,  3, 10, 30,  9, 10, 10,  6, 23,  5,  9, 10,  6,
+	    	 5,  9,  4,  9, 10,  2, 10, 10,  6,  5,  5,  9, 10,  6,  5,
+	    	 5, 23,  9, 10,  6,  5,  3, 10, 12,  5,  5,  3,  6,  9, 12,
+	    	 5,  9, 10,  6,  5,  5,  5,  3, 10, 12,  9, 12,  9, 10,  6,
+	    	 5,  3,  6,  5,  5,  5,  5,  5, 11, 10, 10, 10,  2,  6,  5,
+	    	 1, 12,  9, 12,  5,  5,  5,  9, 10, 10,  2,  6,  5,  5,  5,
+	    	 5,  3, 10, 10, 12,  5,  9, 10, 10, 30,  5,  5,  5,  5,  5,
+	    	 5,  1, 10, 10, 10,  8, 10, 10, 10,  2, 12,  1, 12,  5,  5,
+	    	 5,  9, 10, 10, 10,  2, 10,  2, 10,  8, 10, 12,  3, 12,  5,
+	    	 5, 27, 10, 10,  6,  5,  3, 12,  3, 10, 10, 10, 12, 27,  4,
+	    	 9, 10, 10, 10,  8,  8,  8, 10,  8, 10, 10, 10, 10, 10, 12
+	    	 }
 	    };
 	    
 	    private final int validSpeeds[] = {1, 2, 3, 4};
@@ -173,14 +190,14 @@ public class Board extends JPanel implements ActionListener{
         
         private void showIntro(Graphics2D g2d) {
 
-        	String s = "Press s to start.";
+        	String str = "Press s to start.";
             
             g2d.setColor(new Color(0, 150, 200));
             g2d.fillRect(50, scrSize / 2 - 30, scrSize - 100, 50);
             g2d.drawRect(50, scrSize / 2 - 30, scrSize - 100, 50);
             g2d.setColor(Color.WHITE);
             g2d.setFont(fontSmall);
-            g2d.drawString(s, scrSize / 3, scrSize / 2);
+            g2d.drawString(str, scrSize / 3, scrSize / 2);
         }
         
         private void drawScore(Graphics2D g2d) {
@@ -191,11 +208,26 @@ public class Board extends JPanel implements ActionListener{
             g2d.setFont(font);
             g2d.setColor(new Color(96, 128, 255));
             s = "Score: " + score;
-            g2d.drawString(s, scrSize / 2 + 80, scrSize + 16);
+            g2d.drawString(s, scrSize / 2 + 70, scrSize + 16);
 
             for (i = 0; i < lifeLeft; i++) {
                 g2d.drawImage(pacman3right, i * 28 + 8, scrSize + 1, this);
             }
+        }
+        
+        private void drawGameOver(Graphics2D g2d){
+        	String str = "GAME OVER!!!";
+        	String str2 =	"Score: " + score;
+        	String str3 = "Press s to continue.";
+        	
+        	g2d.setColor(new Color(0, 150, 200));
+            g2d.fillRect(50, scrSize / 2 - 30, scrSize - 100, 80);
+            g2d.drawRect(50, scrSize / 2 - 30, scrSize - 100, 80);
+            g2d.setColor(Color.RED);
+            g2d.setFont(fontSmall);
+            g2d.drawString(str, scrSize / 3, scrSize / 2);
+            g2d.drawString(str2, (scrSize / 3) + 25 , (scrSize / 2) + 15);
+            g2d.drawString(str3, (scrSize / 3) - 7 , (scrSize / 2) + 30);
         }
         
         private void die() {
@@ -289,10 +321,13 @@ public class Board extends JPanel implements ActionListener{
         }
         
         private void nroGhostsLevel(){
-        	switch (level){
+        	int aux = level % 3;
+        	switch (aux){
         	case 0: nroGhosts = 1;
         			break;
         	case 1: nroGhosts = 2;
+        			break;
+        	case 2: nroGhosts = 3;
         			break;
         	default: nroGhosts = 1;
         	}
@@ -500,7 +535,7 @@ public class Board extends JPanel implements ActionListener{
         private void initLevel() {
 
             int i;
-            int aux = level % 2;
+            int aux = level % 3;
             for (i = 0; i < nroBlocks * nroBlocks; i++) {
                 screenData[i] = levelData1[aux][i];
             }
@@ -581,7 +616,11 @@ public class Board extends JPanel implements ActionListener{
             if (gameOn) {
                 playGame(g2d);
             } else {
-                showIntro(g2d);
+            	if( lifeLeft == 0){
+            		drawGameOver(g2d);
+            	}else{
+            		showIntro(g2d);
+            	}
             }
 
             g2d.drawImage(img, 5, 5, this);
