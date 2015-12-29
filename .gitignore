@@ -9,5 +9,7 @@ buildNumber.properties
 .metadata
 RemoteSystemsTempFiles
 .settings
-bin
+bin/
+/bin/
+.classpath
 
