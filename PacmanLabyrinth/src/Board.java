@@ -497,8 +497,15 @@ public class Board extends JPanel implements ActionListener{
                     }
 
                     if ((screenData[i] & 4) != 0) { 
-                        g2d.drawLine(x + blockSize - 1, y, x + blockSize - 1,
-                                y + blockSize - 1);
+                    	if((screenData[i] & 32) != 0){
+                    		g2d.setColor(new Color(0, 0, 0));
+                    		g2d.drawLine(x + blockSize - 1, y, x + blockSize - 1,
+                    				y + blockSize - 1);
+                    		
+                    	}else{
+                    		g2d.drawLine(x + blockSize - 1, y, x + blockSize - 1,
+                    				y + blockSize - 1);
+                    	}
                     }
 
                     if ((screenData[i] & 8) != 0) { 
@@ -507,13 +514,13 @@ public class Board extends JPanel implements ActionListener{
                     }
 
                     if ((screenData[i] & 16) != 0) { 
-                        g2d.setColor(dotColor);
-                        g2d.fillRect(x + 11, y + 11, 7, 7);
+                    	g2d.setColor(dotColor);
+                        g2d.fillRect(x + 8, y + 9, 7, 7);
                     }
                     
                     if ((screenData[i] & 32) != 0) { 
                         g2d.setColor(winColor);
-                        g2d.fillRect(x + 11, y + 11, 8, 8);
+                        g2d.fillRect(x + 8, y + 9, 8, 8);
                     }
 
                     i++;
@@ -658,7 +665,8 @@ public class Board extends JPanel implements ActionListener{
                         }
                     }
                 } else {
-                    if (key == 's' || key == 'S') {
+                    boolean k1 = false, k2 = false;
+                	if (key == 's' || key == 'S') {
                         gameOn = true;
                         initGame();
                     }
