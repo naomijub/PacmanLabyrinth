@@ -111,7 +111,41 @@ public class Board extends JPanel implements ActionListener{
 	    	 5,  9, 10, 10, 10,  2, 10,  2, 10,  8, 10, 12,  3, 12,  5,
 	    	 5, 27, 10, 10,  6,  5,  3, 12,  3, 10, 10, 10, 12, 27,  4,
 	    	 9, 10, 10, 10,  8,  8,  8, 10,  8, 10, 10, 10, 10, 10, 12
-	    	 }
+	    	 },
+	    	 {
+	    	 11, 10, 10,  2,  2, 10, 10, 10, 10,  6,  3, 10,  2,  6, 39,
+	    	  3, 10, 30,  5,  5,  3, 10, 10, 10, 12,  5,  7,  5,  5,  5,
+	    	  1, 10, 10, 12,  5,  9, 10,  6,  3,  6,  5,  5,  5,  5,  5,
+	    	  9, 10, 10,  6,  5, 11, 10,  8, 12, 29,  5,  5,  5,  5,  5,
+	    	  3, 10, 10, 12,  9, 10, 10, 10, 10, 10, 12,  5,  5,  5,  5,
+	    	  9, 10, 10, 10, 10, 30,  3, 10, 10,  6,  3,  4,  5,  5,  5,
+	    	  3,  6,  3, 10, 10,  6, 29,  3, 10, 12,  5,  5,  5,  5,  5,
+	    	  5,  5,  5,  3,  6,  1,  6,  5,  3, 10, 12,  5,  5,  5,  5,
+	    	  5,  5,  5,  5,  5,  5,  5,  5,  9, 10, 30,  9, 12,  5,  5,
+	    	  5,  5,  5,  5,  5,  5,  5,  9, 10,  6,  3, 10, 10, 12,  5,
+	    	  5,  5,  5,  5,  5,  5,  9, 10, 10, 12,  5,  3, 10, 14,  5,
+	    	  5,  5,  5,  5,  5,  9, 10, 10, 10, 10, 12,  5,  3, 10, 12,
+	    	  5,  5,  5,  5,  9, 10, 10, 30,  3, 10, 10, 12,  5,  3,  6,
+	    	  5,  5,  5,  9, 10, 10, 10,  6,  1,  2, 10, 10, 12, 29,  5,
+	    	 29,  9,  8, 10, 10, 10, 10,  8, 12,  9, 10, 10, 10, 10, 12
+	    	},
+	    	{ 
+	    	 7,  3,  2, 10, 10, 10,  6,  3, 10, 10, 10,  2, 10, 10,  6,
+	    	 5,  1, 12,  3, 10, 30,  5,  5, 27, 10,  6,  9,  2, 14,  5,
+	    	 5,  5,  3, 12,  3, 30,  5,  9, 10,  6,  9,  6,  9,  6,  5,
+	    	 5,  1, 12, 11,  8,  2,  4,  3, 30,  9,  6,  9,  6, 13,  5,
+	    	 5,  5, 23,  3, 10,  8,  4,  9, 10, 10,  8,  6,  1, 14,  5,
+	    	 5,  5,  5,  5, 11,  6,  9, 10,  6,  3,  6,  5,  5,  3,  4,
+	    	 5,  5,  5,  9, 10,  4,  7,  7, 29,  5, 13,  5,  5,  5,  5,
+	    	 5,  5,  9,  2, 14,  1,  4,  9, 10,  0, 10, 12,  5,  5,  5,
+	    	 5,  9,  6,  9,  6,  5,  1, 10, 30,  1, 14,  3, 12, 29,  5,
+	    	 5, 14,  9,  6,  9,  4, 13,  3,  2, 12,  3,  4,  3,  6,  5,
+	    	 1, 10, 14,  1,  6,  9,  6,  5, 29,  3,  0,  0, 12, 13,  5,
+	    	 5,  3,  6,  5,  1,  6,  9, 12,  3, 12,  5,  5, 43,  6,  5,
+	    	 5,  5, 29,  5,  5,  5, 27,  6,  5, 27, 12,  1, 14,  5,  5,
+	    	 5,  9, 10, 12,  5,  9, 10, 12,  5,  3, 10, 12,  3, 12,  5,
+	    	 9, 10, 10, 10,  8, 10, 10, 10, 12, 29, 27, 10,  8, 10, 12
+	    	 } 
 	    };
 	    
 	    private final int validSpeeds[] = {1, 2, 3, 4};
@@ -321,14 +355,18 @@ public class Board extends JPanel implements ActionListener{
         }
         
         private void nroGhostsLevel(){
-        	int aux = level % 3;
+        	int aux = level % 5;
         	switch (aux){
         	case 0: nroGhosts = 1;
         			break;
-        	case 1: nroGhosts = 2;
+        	case 1: nroGhosts = 1;
         			break;
-        	case 2: nroGhosts = 3;
+        	case 2: nroGhosts = 2;
         			break;
+        	case 3: nroGhosts = 3;
+					break;
+        	case 4: nroGhosts = 4;
+					break;
         	default: nroGhosts = 1;
         	}
         }
@@ -542,7 +580,7 @@ public class Board extends JPanel implements ActionListener{
         private void initLevel() {
 
             int i;
-            int aux = level % 3;
+            int aux = level % 5;
             for (i = 0; i < nroBlocks * nroBlocks; i++) {
                 screenData[i] = levelData1[aux][i];
             }
@@ -557,18 +595,25 @@ public class Board extends JPanel implements ActionListener{
         	
             short i;
             int dx = 1;
-            int random;
 
             for (i = 0; i < nroGhosts; i++) {
-
-                ghostY[i] = 4 * blockSize;
-                ghostX[i] = 4 * blockSize;
+            	int ky = (rg.nextInt(131) % 6) + 3;
+            	int kx = (rg.nextInt(101) % 6) + 3;
+                ghostY[i] = (ky + i) * blockSize;
+                ghostX[i] = (kx + i) * blockSize;
                 ghostDy[i] = 0;
                 ghostDx[i] = dx;
                 dx = -dx;
-                random = rg.nextInt(131) % 4;
 
-                ghostSpeed[i] = validSpeeds[random];
+                if(level < 4){
+                	ghostSpeed[i] = validSpeeds[0];
+                }else if(level < 8){
+                	ghostSpeed[i] = validSpeeds[1];
+                }else if(level < 12){
+                	ghostSpeed[i] = validSpeeds[2];
+                }else{
+                	ghostSpeed[i] = validSpeeds[4];
+                }
             }
 
             pacmanx = 0 * blockSize;
