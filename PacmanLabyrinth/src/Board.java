@@ -129,6 +129,23 @@ public class Board extends JPanel implements ActionListener{
 	    	  5,  5,  5,  9, 10, 10, 10,  6,  1,  2, 10, 10, 12, 29,  5,
 	    	 29,  9,  8, 10, 10, 10, 10,  8, 12,  9, 10, 10, 10, 10, 12
 	    	},
+	    	 {
+	    	 3, 10,  2, 10,  6,  3, 14,  3, 10,  6,  3,  2, 10, 14, 39,
+	    	 5,  7,  9,  6,  1, 12,  3, 12,  3,  8,  4, 13,  3,  6,  5,
+	    	 9,  4,  3, 12, 13,  3,  4,  1,  4, 23, 13,  3, 12,  9, 12,
+	    	 7,  5,  9,  6,  3, 12,  9,  6,  9, 12,  3, 12,  3, 10,  6,
+	    	 9,  0, 14,  9, 12,  7,  3, 12,  3, 14,  9,  6,  9,  6,  5,
+	    	23,  9, 10,  6,  7,  5,  9,  6,  9, 10,  6,  9,  6,  5,  5,
+	    	 9,  6,  3,  8, 12,  1,  6,  9,  6,  3, 12,  3, 12, 29,  5,
+	    	 7,  9, 12,  3,  6, 13,  5,  3, 12,  5,  3,  8, 10, 10, 12,
+	    	 1, 10,  2, 12,  1,  6,  1, 12,  7,  1, 12,  3, 10,  6, 23,
+	    	 1,  6,  9,  6, 13,  9,  8, 10, 12,  9,  6,  9,  6,  9, 12,
+	    	 5,  9, 14,  9,  6, 11,  6,  3,  6, 11,  8,  6,  9, 10,  6,
+	    	 9,  6,  3,  6,  9,  6,  1, 12,  9,  6,  3, 12,  3,  6,  5,
+	    	 3,  8, 12,  9, 14,  1, 12,  3,  6,  9,  8,  2, 12,  9, 12,
+	    	 9, 10,  6,  3,  6,  5,  3, 12,  1, 10,  6,  5, 11,  2,  6,
+	    	11, 10,  8, 12, 29,  9, 12, 11, 12, 27, 12,  9, 10, 12, 29
+	    	} ,
 	    	{ 
 	    	 7,  3,  2, 10, 10, 10,  6,  3, 10, 10, 10,  2, 10, 10,  6,
 	    	 5,  1, 12,  3, 10, 30,  5,  5, 27, 10,  6,  9,  2, 14,  5,
@@ -355,7 +372,7 @@ public class Board extends JPanel implements ActionListener{
         }
         
         private void nroGhostsLevel(){
-        	int aux = level % 5;
+        	int aux = level % 6;
         	switch (aux){
         	case 0: nroGhosts = 1;
         			break;
@@ -363,9 +380,11 @@ public class Board extends JPanel implements ActionListener{
         			break;
         	case 2: nroGhosts = 2;
         			break;
-        	case 3: nroGhosts = 3;
+        	case 3: nroGhosts = 2;
 					break;
-        	case 4: nroGhosts = 4;
+        	case 4: nroGhosts = 3;
+					break;
+        	case 5: nroGhosts = 4;
 					break;
         	default: nroGhosts = 1;
         	}
@@ -580,7 +599,7 @@ public class Board extends JPanel implements ActionListener{
         private void initLevel() {
 
             int i;
-            int aux = level % 5;
+            int aux = level % 6;
             for (i = 0; i < nroBlocks * nroBlocks; i++) {
                 screenData[i] = levelData1[aux][i];
             }
@@ -605,11 +624,11 @@ public class Board extends JPanel implements ActionListener{
                 ghostDx[i] = dx;
                 dx = -dx;
 
-                if(level < 4){
+                if(level < 6){
                 	ghostSpeed[i] = validSpeeds[0];
-                }else if(level < 8){
-                	ghostSpeed[i] = validSpeeds[1];
                 }else if(level < 12){
+                	ghostSpeed[i] = validSpeeds[1];
+                }else if(level < 18){
                 	ghostSpeed[i] = validSpeeds[2];
                 }else{
                 	ghostSpeed[i] = validSpeeds[4];
